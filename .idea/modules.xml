@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/java-compiler.iml" filepath="$PROJECT_DIR$/java-compiler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java-compiler-data/java-compiler-data.iml" filepath="$PROJECT_DIR$/java-compiler-data/java-compiler-data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java-compiler-engine/java-compiler-engine.iml" filepath="$PROJECT_DIR$/java-compiler-engine/java-compiler-engine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java-compiler-web/java-compiler-web.iml" filepath="$PROJECT_DIR$/java-compiler-web/java-compiler-web.iml" />
+    </modules>
+  </component>
+</project>
+

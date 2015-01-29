@@ -1,0 +1,8 @@
+public class Klasa {
+    public static void main(String[] args) {
+        String[] table = { "mama", "tata", "Ola" }
+        for (String s : table) {
+            System.out.println(s);
+        }
+    }
+}

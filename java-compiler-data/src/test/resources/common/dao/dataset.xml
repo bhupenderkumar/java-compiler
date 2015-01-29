@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <roles role_id="1" name="administrator"></roles>
+    <roles role_id="2" name="uzytkownik"></roles>
+
+    <file_visibility file_visibility_id="1" name="prywatny"></file_visibility>
+    <file_visibility file_visibility_id="2" name="publiczny"></file_visibility>
+
+    <file_statuses file_status_id="1" name="skompilowany"></file_statuses>
+    <file_statuses file_status_id="2" name="blad kompilacji"></file_statuses>
+    <file_statuses file_status_id="3" name="oczekujacy na kompilacje"></file_statuses>
+
+    <files file_id="1" source_code="source1" file_status_id="1" file_visibility_id="1"></files>
+    <files file_id="2" source_code="source2" file_status_id="2" file_visibility_id="2"></files>
+    <files file_id="3" source_code="source3" file_status_id="3" file_visibility_id="1"></files>
+    <files file_id="4" source_code="source4" file_status_id="1" file_visibility_id="2"></files>
+    <files file_id="5" source_code="source5" file_status_id="2" file_visibility_id="1"></files>
+
+
+    <users user_id="1" username="username1" password="password1" role_id="1"></users>
+    <users user_id="2" username="username2" password="password2" role_id="2"></users>
+    <users user_id="3" username="username3" password="password3" role_id="2"></users>
+    <users user_id="4" username="username4" password="password4" role_id="2"></users>
+    <users user_id="5" username="username5" password="password5" role_id="2"></users>
+
+    <users_files users_files_id="1" user_id="1" file_id="1"></users_files>
+    <users_files users_files_id="2" user_id="1" file_id="2"></users_files>
+    <users_files users_files_id="3" user_id="1" file_id="3"></users_files>
+    <users_files users_files_id="4" user_id="2" file_id="4"></users_files>
+    <users_files users_files_id="5" user_id="2" file_id="5"></users_files>
+</dataset>

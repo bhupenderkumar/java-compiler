@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:util="http://java.sun.com/jsf/composite/util"
+
+        >
+<ui:composition template="#{conf['template.default']}">
+    <ui:define name="title">Java Kompilator - Pliki</ui:define>
+    <ui:define name="content">
+        <h:panelGroup layout="block" id="table-panel" >
+        <div class="row">
+            <h2>Pliki</h2>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-8" >
+                <h:dataTable value="#{filesListBean.files}" var="file" styleClass="table"
+                             columnClasses="text-center" headerClass="text-center">
+                    <h:column>
+                        <f:facet name="header">Data utworzenia</f:facet>
+
+                        <div class="text-center"><h:outputText
+                                value="#{filesListBean.dateToString(file.creationTime)}"/></div>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Opis</f:facet>
+
+                        <div class="text-center"><h:outputText value="#{file.description}"/></div>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Status</f:facet>
+                        <div class="#{filesListBean.CSSClass(file.fileStatusId)} text-center" role="alert">
+                            <h:outputText value="#{filesListBean.getFileStatus(file.fileStatusId).name}" />
+                        </div>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Autor</f:facet>
+                        <div class="text-center">
+                            <h:link value="#{filesListBean.getUser(file.userId).username}"
+                                    outcome="files-list">
+                                <f:param name="un" value="#{file.userId}"/>
+                            </h:link>
+                        </div>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Akcja</f:facet>
+
+                        <div class="text-center"><h:link outcome="view-file" value="Podgląd">
+                            <f:param name="id" value="#{file.id}"/>
+                        </h:link></div>
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </div>
+        <div class="row">
+            <util:pagination id="pagination" list="#{filesListBean.files}"
+                             paginationBean="#{filesListBean}"
+                             outcomeValue="files-list" />
+        </div>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        >
+<h:body>
+    <ui:composition>
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <h:link outcome="index" styleClass="navbar-brand" value="Java Kompilator"/>
+                        </li>
+                        <li class="divider"></li>
+                        <h:panelGroup layout="block" rendered="#{loginBean.logged}" >
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profil <span
+                                    class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><h:link outcome="user-change-settings" value="Ustawienia Konta"/></li>
+                                <li class="divider"></li>
+                                <li><h:link value="Twoje Pliki" outcome="user-files"/></li>
+                            </ul>
+                        </li>
+                        </h:panelGroup>
+                        <li><h:link outcome="files-list" value="Pliki"/> </li>
+                        <h:panelGroup layout="block" rendered="#{loginBean.role('ADMINISTRATOR')}">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrator <span
+                                        class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><h:link outcome="users-list" value="Użytkownicy"/></li>
+                                    <li class="divider"></li>
+                                    <li><h:link value="Role / Widoczności" outcome="roles-visibilities"/></li>
+                                </ul>
+                            </li>
+                        </h:panelGroup>
+                        <li>
+                            <h:button outcome="login" styleClass="btn btn-primary mt7 ml3" value="Zaloguj"
+                                      rendered="#{!loginBean.logged}"/>
+                            <h:form id="logout-form" rendered="#{loginBean.logged}">
+                                <h:commandButton value="Wyloguj" action="#{loginBean.logout()}"
+                                                 styleClass="btn btn-primary mt7"/>
+                            </h:form>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+        </nav>
+    </ui:composition>
+</h:body>
+</html>

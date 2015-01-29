@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        >
+<ui:composition template="#{conf['template.default']}">
+    <ui:define name="title">Java Kompiler - Pliki #{loginBean.username}</ui:define>
+    <ui:define name="content">
+        <h2>Twoje pliki</h2>
+        <br/><br/>
+        <h:form id="table-form">
+        <div class="row">
+            <div class="col-md-10">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Lista plików</div>
+                        <div class="panel-body">
+                            <h:dataTable value="#{userFilesBean.fileList}" var="file" styleClass="table"
+                                         columnClasses="text-center" headerClass="text-center">
+                                <h:column>
+                                    <f:facet name="header">Data utworzenia</f:facet>
+
+                                    <div class="text-center"><h:outputText
+                                            value="#{userFilesBean.dateToString(file.creationTime)}"/></div>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Opis</f:facet>
+
+                                    <div class="text-center"><h:outputText value="#{file.description}"/></div>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Status</f:facet>
+                                    <div class="#{userFilesBean.CSSClass(file.fileStatusId)} text-center" role="alert">
+                                        <h:outputText value="#{userFilesBean.getFileStatus(file.id).name}" />
+                                    </div>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Widoczność</f:facet>
+                                    <div class="text-center">
+                                        <h:outputText value="#{userFilesBean.getFileVisibility(file.id).name}"/>
+                                    </div>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Akcja</f:facet>
+
+                                    <div class="text-center"><h:link outcome="view-file" value="Podgląd">
+                                        <f:param name="id" value="#{file.id}"/>
+                                    </h:link></div>
+                                    <div class="text-center ml3">
+
+                                        <h:commandLink value="Usuń">
+                                            <f:ajax listener="#{userFilesBean.deleteFile(file)}"
+                                                    render="table-form\\:delete-form-panel" event="click"/>
+                                        </h:commandLink>
+
+                                    </div>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+        <h:panelGroup id="delete-form-panel" layout="block">
+            <h:panelGroup class="col-md-8" rendered="#{userFilesBean.permitDelete}">
+                <div class="alert alert-warning" role="alert">
+                    Na pewno chesz usunąc plik utworzony w
+                    <strong>
+                        <h:outputText
+                                value="#{userFilesBean.dateToString(userFilesBean.toDelete.creationTime)}"/>
+                    </strong>? <h:commandLink value="Usuń" action="#{userFilesBean.permitDelete()}"/>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+        </h:form>
+</ui:define>
+</ui:composition>
+        </html>

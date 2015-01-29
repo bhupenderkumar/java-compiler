@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<composite:interface>
+    <composite:attribute name="list" type="util.PaginationList"/>
+    <composite:attribute name="outcomeValue" type="java.lang.String"/>
+    <composite:attribute name="paginationBean" type="common.cdi.PaginationBean" />
+</composite:interface>
+
+<composite:implementation>
+
+    <div class="col-md-8">
+        <ul class="pagination pull-left">
+            <h:panelGroup rendered="#{cc.attrs.list.hasPrevious()}">
+                <li>
+                    <h:link value="Pierwsza" outcome="#{cc.attrs.outcomeValue}">
+                        <f:param name="p" value="0" />
+                        <c:forEach var="entry" items="#{cc.attrs.paginationBean.paramMap}">
+                            <f:param name="#{entry.key}" value="#{entry.value}" />
+                        </c:forEach>
+                    </h:link>
+                </li>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{cc.attrs.list.hasPrevious()}">
+                <li>
+                    <h:link value="&laquo;" outcome="#{cc.attrs.outcomeValue}">
+                        <f:param name="p" value="#{cc.attrs.paginationBean.currentPageIndex - 1}" />
+                        <c:forEach var="entry" items="#{cc.attrs.paginationBean.paramMap}">
+                            <f:param name="#{entry.key}" value="#{entry.value}" />
+                        </c:forEach>
+                    </h:link>
+                </li>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{cc.attrs.list.hasNext()}">
+                <li>
+                    <h:link value="&raquo;" outcome="#{cc.attrs.outcomeValue}">
+                        <f:param name="p" value="#{cc.attrs.paginationBean.currentPageIndex + 1}" />
+                        <c:forEach var="entry" items="#{cc.attrs.paginationBean.paramMap}">
+                            <f:param name="#{entry.key}" value="#{entry.value}" />
+                        </c:forEach>
+                    </h:link>
+                </li>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{cc.attrs.list.hasNext()}">
+                <li>
+                    <h:link value="Ostatnia" outcome="#{cc.attrs.outcomeValue}">
+                        <f:param name="p" value="#{cc.attrs.list.retTotalPages()}" />
+                        <c:forEach var="entry" items="#{cc.attrs.paginationBean.paramMap}">
+                            <f:param name="#{entry.key}" value="#{entry.value}" />
+                        </c:forEach>
+                    </h:link>
+                </li>
+            </h:panelGroup>
+        </ul>
+        <div class="pull-right">
+            <h:form id="pagination-form">
+                <div class="input-group">
+                <span class="input-group-addon w125">Ilość wyników</span>
+                <h:selectOneMenu styleClass="form-control" id="selected-option" value="#{cc.attrs.paginationBean.pageSize}" style="width: 70px !important;">
+                    <f:selectItem itemValue="1" itemLabel="1" />
+                    <f:selectItem itemValue="5" itemLabel="5" />
+                    <f:selectItem itemValue="10" itemLabel="10" />
+                    <f:selectItem itemValue="50" itemLabel="50" />
+                    <f:ajax event="change" listener="#{cc.attrs.paginationBean.change()}"
+                            execute="pagination-form:selected-option"
+                            render="pagination:pagination-link"/>
+                </h:selectOneMenu>
+                </div>
+            </h:form>
+            <h:panelGroup styleClass="pull-left" layout="block" id="pagination-link">
+            <h:link styleClass="btn btn-primary mt7 w125" outcome="#{cc.attrs.outcomeValue}" value="Zmień" id="change-page-size-button">
+                <c:forEach var="entry" items="#{cc.attrs.paginationBean.paramMap}">
+                    <f:param name="#{entry.key}" value="#{entry.value}" />
+                </c:forEach>
+            </h:link>
+
+            </h:panelGroup>
+        </div>
+    </div>
+
+</composite:implementation>
+
+
+</html>

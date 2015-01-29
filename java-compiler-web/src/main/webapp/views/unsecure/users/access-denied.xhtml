@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        >
+<ui:composition template="#{conf['template.default']}">
+    <ui:define name="title">Java Kompilator - Bran uprawnień</ui:define>
+    <ui:define name="content">
+        <h2>Brak uprawnień</h2>
+        <br/>
+        <div class="alert alert-danger" role="alert">
+            Nie posiadasz uprawnień aby oglądać zawartość tej strony.
+            <b><h:link value="Zaloguj się" outcome="login" /> </b>bądź powróć do
+            <b><h:link value="Strony Głównej" outcome="index" /></b>.
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

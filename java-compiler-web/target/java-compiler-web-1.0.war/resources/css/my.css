@@ -1,0 +1,78 @@
+.main-container {
+    width: 970px;
+    margin: auto;
+}
+
+#content-container {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.mt7 {
+    margin-top: 7px;
+}
+
+.mr40 {
+    margin-right: 40px;
+}
+
+.ml-40 {
+    margin-left: -40px;
+}
+
+.messages-list {
+    list-style: none;
+}
+
+.footer {
+    width:100%;
+    height:40px;
+    position:absolute;
+    bottom:0;
+    left:0;
+}
+
+.w125 {
+    width: 125px;
+}
+
+.error-link {
+    font-weight: bold;
+
+}
+
+.w100 {
+    width: 100px;
+}
+
+.w130i{
+    width: 130px !important;
+}
+
+.mr10 {
+    margin-right: 10px;
+}
+
+.ml3 {
+    margin-left: 3px;
+}
+
+textarea {
+    resize: none;
+}
+
+.mtl7 {
+    margin-left: 7px;
+    margin-top: 7px;
+}
+
+.mbl7 {
+    margin-bottom: 7px !important;
+    margin-left: 7px !important;
+}
+
+.mb7 {
+    margin-bottom: 7px;
+}
+
+

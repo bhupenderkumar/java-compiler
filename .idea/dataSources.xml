@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="535778779">
+    <data-source source="LOCAL" name="testPU" uuid="a4e166f8-2fc1-4122-885d-1a387f2cc887">
+      <jdbc-driver>org.hibernate.</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/javacompiler</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

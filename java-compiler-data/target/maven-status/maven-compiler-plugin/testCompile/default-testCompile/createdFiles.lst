@@ -1,0 +1,3 @@
+users\dao\UserDaoTest.class
+roles\dao\RoleDaoTest.class
+common\dao\AbstractDaoTest.class

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        >
+
+<ui:composition template="#{conf['template.default']}">
+    <ui:define name="title">Java Kompilator - Podgląd pliku</ui:define>
+    <ui:define name="content">
+        <h2>Podgląd pliku</h2>
+        <br/>
+        <h4>Plik utworzony dn. <strong><h:outputText
+                value="#{viewFileBean.dateToString(viewFileBean.creationTime)}"/></strong></h4>
+        <h4>Autor: <strong><h:outputText value="#{viewFileBean.username}"/> </strong></h4>
+        <br/>
+
+        <h:panelGroup layout="block" class="row">
+            <h:form id="compile-and-run-form">
+                <div class="col-md-5">
+
+                    <div class="row">
+                        <h:inputTextarea rows="15" cols="60" value="#{viewFileBean.sourceCode}"
+                                         id="source-code-text-area" style="resize: none"/>
+                    </div>
+                    <br/>
+
+                    <div class="row">
+                        <h:commandButton value="Kompiluj i Uruchom" styleClass="btn btn-primary mr10"
+                                         action="#{viewFileBean.compileAndRun()}"/>
+                        <h:commandButton value="Nadpisz" styleClass="btn btn-info w100"
+                                         rendered="#{loginBean.id == viewFileBean.authorId}">
+                            <f:ajax render="save-file-panel" listener="#{viewFileBean.savePermit()}" event="click"/>
+                        </h:commandButton>
+                    </div>
+
+                    <br/>
+                </div>
+                <div class="col-md-5">
+                    <div class="alert alert-info" role="alert">
+                        W celu poprawnej kompilacji kodu klasa tworzona przez użytkownika powinna
+                        nosić nazwę <strong>Klasa</strong>.
+                    </div>
+                    <br/>
+                    <h:panelGroup layout="block" styleClass="row ml3" id="save-file-panel">
+                        <h:panelGroup layout="block" rendered="#{viewFileBean.renderSaveForm}">
+                            <h4>Szczegóły pliku</h4>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon w125">Opis</span>
+                                        <h:inputTextarea value="#{viewFileBean.description}" rows="2" cols="55"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon w125">Widoczność</span>
+                                        <h:selectOneMenu value="#{viewFileBean.fileVisibilityId}"
+                                                         styleClass="form-control" style="width: 110px !important;">
+                                            <f:selectItems value="#{viewFileBean.visibilityList}" var="item"
+                                                           itemValue="#{item.id}" itemLabel="#{item.name}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h:commandButton value="Potwierdź zapis" action="#{viewFileBean.saveFile()}"
+                                                     styleClass="btn btn-info w100"/>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                        <br/>
+
+                    </h:panelGroup>
+                    <h:messages styleClass="messages-list ml-40" style="display: block" errorClass="alert alert-danger"
+                                infoClass="alert alert-success" role="alert"/>
+
+                    <h:panelGroup layout="block" rendered="#{viewFileBean.compiledFlag}">
+                        <h4>Wynik kompilacji</h4>
+                        <br/>
+
+                        <div class="alert alert-info" role="alert">
+                            <h:outputText value="#{viewFileBean.executionResult.executionMessage}"/>
+                        </div>
+                    </h:panelGroup>
+                </div>
+            </h:form>
+        </h:panelGroup>
+        <h:panelGroup layout="block" id="comment-section">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>Komentarze</h4>
+                </div>
+            </div>
+            <ui:repeat value="#{viewFileBean.commentList}" var="comment">
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Dodane przez <strong><h:outputText
+                                    value="#{viewFileBean.retCommentAuthorName(comment.id)}"/>
+                            </strong> o godzinie <strong><h:outputText
+                                    value="#{viewFileBean.dateToString(comment.time)}"/>
+                            </strong>.
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <h:outputText value="#{comment.commentText}"/>
+                            <h:panelGroup rendered="#{comment.userId == loginBean.id}" styleClass="pull-right">
+                                <h:form id="remove-comment#{comment.id}-form">
+                                    <h:commandButton value="Usuń" styleClass="btn btn-danger">
+                                        <f:param name="id" value="#{viewFileBean.id}" />
+                                        <f:ajax event="click" render="comment-section"
+                                                listener="#{viewFileBean.deleteComment(comment)}"/>
+                                    </h:commandButton>
+                                </h:form>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </div>
+
+            </ui:repeat>
+            <h:panelGroup layout="block" rendered="#{loginBean.logged}">
+                <h:form id="add-comment-form">
+                    <div class="col-md-8">
+                        <h4>Dodaj komentarz</h4>
+                        <h:inputTextarea value="#{viewFileBean.commentText}" cols="60" rows="2"/>
+                    </div>
+                    <br/>
+
+                    <div class="col-md-8">
+                        <h:commandButton value="Dodaj" styleClass="btn btn-default">
+                            <f:param name="id" value="#{viewFileBean.id}" />
+                            <f:ajax event="click" listener="#{viewFileBean.addComment()}" render="comment-section"
+                                    execute="add-comment-form"/>
+                        </h:commandButton>
+                    </div>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGroup>
+        <h:outputScript>
+            $("#compile-and-run-form\\:source-code-text-area").keydown(function (e) {
+                console.log('key was pressed');
+                if (e.keyCode === 9) { // tab was pressed
+                    var start = this.selectionStart;
+                    var end = this.selectionEnd;
+                    var $this = $(this);
+                    var value = $this.val();
+                    $this.val(value.substring(0, start)
+                            + "\t"
+                            + value.substring(end));
+                    this.selectionStart = this.selectionEnd = start + 1;
+                    e.preventDefault();
+                }
+            });
+        </h:outputScript>
+    </ui:define>
+</ui:composition>
+
+
+</html>
